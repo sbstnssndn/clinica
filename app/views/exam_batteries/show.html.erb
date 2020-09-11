@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @exam_battery.name %>
+</p>
+
+<p>
+  <strong>Certification:</strong>
+  <%= @exam_battery.certification %>
+</p>
+
+<p>
+  <strong>Kind:</strong>
+  <%= @exam_battery.kind %>
+</p>
+
+<h2>Exams</h2>
+
+<ul>
+  <% @exam_battery.exams.each do |exam| %>
+    <li><%= link_to exam.name, exam_path(exam) %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Edit', edit_exam_battery_path(@exam_battery) %> |
+<%= link_to 'Back', exam_batteries_path %>

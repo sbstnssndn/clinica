@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Exam Batteries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Certification</th>
+      <th>Kind</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @exam_batteries.each do |exam_battery| %>
+      <tr>
+        <td><%= exam_battery.name %></td>
+        <td><%= exam_battery.certification %></td>
+        <td><%= exam_battery.kind %></td>
+        <td><%= link_to 'Show', exam_battery %></td>
+        <td><%= link_to 'Edit', edit_exam_battery_path(exam_battery) %></td>
+        <td><%= link_to 'Destroy', exam_battery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Exam Battery', new_exam_battery_path %>

@@ -1,0 +1,32 @@
+<%= form_with(model: exam_battery, local: true) do |form| %>
+  <% if exam_battery.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(exam_battery.errors.count, "error") %> prohibited this exam_battery from being saved:</h2>
+
+      <ul>
+      <% exam_battery.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :certification %>
+    <%= form.text_field :certification %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kind %>
+    <%= form.number_field :kind %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

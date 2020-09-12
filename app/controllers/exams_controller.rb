@@ -1,5 +1,6 @@
 class ExamsController < ApplicationController
   before_action :set_exam, only: [:show, :edit, :update, :destroy]
+  before_action :set_exam_batteries, only: [:new, :edit]
 
   # GET /exams
   # GET /exams.json
@@ -15,6 +16,7 @@ class ExamsController < ApplicationController
   # GET /exams/new
   def new
     @exam = Exam.new
+    @exam.exam_associations.build
   end
 
   # GET /exams/1/edit
@@ -69,6 +71,11 @@ class ExamsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exam_params
-      params.require(:exam).permit(:name)
+      params.require(:exam).permit!
+      # params.require(:exam).permit(:name, exam_associations_attributes: [:order, :exam_battery_id])
     end
+
+  def set_exam_batteries
+    @exam_batteries = ExamBattery.all
+  end
 end

@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_11_043758) do
+ActiveRecord::Schema.define(version: 2020_09_12_033542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "exam_associations", force: :cascade do |t|
+    t.integer "order"
+    t.bigint "exam_id"
+    t.bigint "exam_battery_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_battery_id"], name: "index_exam_associations_on_exam_battery_id"
+    t.index ["exam_id"], name: "index_exam_associations_on_exam_id"
+  end
 
   create_table "exam_batteries", force: :cascade do |t|
     t.string "name"
@@ -34,4 +44,6 @@ ActiveRecord::Schema.define(version: 2020_09_11_043758) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "exam_associations", "exam_batteries"
+  add_foreign_key "exam_associations", "exams"
 end

@@ -69,6 +69,6 @@ class ExamBatteriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exam_battery_params
-      params.require(:exam_battery).permit(:name, :certification, :kind)
+      params.require(:exam_battery).permit(:name, :certification, :kind, exams_attributes: [:name])
     end
 end

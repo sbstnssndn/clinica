@@ -23,8 +23,19 @@
 
   <div class="field">
     <%= form.label :kind %>
-    <%= form.number_field :kind %>
+    <%= form.text_field :kind %>
   </div>
+
+  <fieldset>
+    <h2>Exámenes</h2>
+
+    <%= form.fields_for :exams do |exam_builder| %>
+      <div class="field">
+        <%= exam_builder.label :name %>
+        <%= exam_builder.text_field :name %>
+      </div>
+    <% end %>
+  </fieldset>
 
   <div class="actions">
     <%= form.submit %>

@@ -1,5 +1,6 @@
 class ExamBatteriesController < ApplicationController
   before_action :set_exam_battery, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /exam_batteries
   # GET /exam_batteries.json
@@ -70,6 +71,13 @@ class ExamBatteriesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def exam_battery_params
       #params.require(:exam_battery).permit!
-      params.require(:exam_battery).permit(:name, :certification, :kind, exam_associations_attributes: [:id, :order, :exam_id, :exam_battery_id, :_destroy])
+      params.require(:exam_battery).permit(
+        :name,
+        :certification,
+        :kind,
+        exam_associations_attributes: [
+          :id, :order, :exam_id, :exam_battery_id, :_destroy
+        ]
+      )
     end
 end

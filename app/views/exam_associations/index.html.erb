@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Exam Associations</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Battery name</th>
+    <th>Exam name</th>
+    <th>Order</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @exam_associations.each do |exam_association| %>
+    <tr>
+      <td><%= exam_association.exam_battery.name %></td>
+      <td><%= exam_association.exam.name %></td>
+      <td><%= exam_association.order %></td>
+      <td><%= link_to 'Show', exam_association %></td>
+      <td><%= link_to 'Edit', edit_exam_association_path(exam_association) %></td>
+      <td><%= link_to 'Destroy', exam_association, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Exam Assoc', new_exam_association_path %>

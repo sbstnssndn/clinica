@@ -21,6 +21,7 @@ class ExamsController < ApplicationController
 
   # GET /exams/1/edit
   def edit
+    @exam_associations = @exam.exam_associations.order(:order)
   end
 
   # POST /exams
@@ -44,11 +45,11 @@ class ExamsController < ApplicationController
   def update
     respond_to do |format|
       if @exam.update(exam_params)
-        format.html { redirect_to @exam, notice: 'Exam was successfully updated.' }
-        format.json { render :show, status: :ok, location: @exam }
+        format.html { redirect_to edit_exam_path @exam, notice: 'Exam was successfully updated.' }
+        #format.json { render :show, status: :ok, location: @exam }
       else
         format.html { render :edit }
-        format.json { render json: @exam.errors, status: :unprocessable_entity }
+        #format.json { render json: @exam.errors, status: :unprocessable_entity }
       end
     end
   end

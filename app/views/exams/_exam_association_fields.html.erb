@@ -1,0 +1,16 @@
+<fieldset>
+  <%= f.label :exam_battery_id, class: 'hidden' %>
+  <%= f.select :exam_battery_id,
+               options_from_collection_for_select(
+                   @exam_batteries,
+                   'id',
+                   'name',
+                   f.object.exam_battery_id
+               ) %>
+
+  <%= f.label :order, class: 'hidden' %>
+  <%= f.number_field :order %>
+
+  <%= f.hidden_field :_destroy %>
+  <p class="remove_fields" style="text-decoration: underline; color: red; cursor: pointer;">Eliminar</p>
+</fieldset>

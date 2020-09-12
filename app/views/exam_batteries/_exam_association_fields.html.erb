@@ -1,0 +1,20 @@
+<fieldset>
+  <div class="field">
+    <%= f.label :exam_id %>
+    <%= f.select :exam_id, options_from_collection_for_select(
+      Exam.all,
+      'id',
+      'name',
+      f.object.exam ? f.object.exam.id : nil
+    ) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :order %>
+    <%= f.text_field :order %>
+  </div>
+
+  <%= f.hidden_field :_destroy %>
+  <p class="remove_fields" style="text-decoration: underline; color: red; cursor: pointer;">Eliminar</p>
+  <hr />
+</fieldset>

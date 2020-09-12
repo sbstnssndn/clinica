@@ -15,6 +15,9 @@
 # gem 'pg'
 #
 default: &default
+  username: oferusdev
+  password: oferusdev
+  host: localhost
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide

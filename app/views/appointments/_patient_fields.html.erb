@@ -1,0 +1,13 @@
+<fieldset>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :rut %>
+  <%= f.text_field :rut %>
+
+  <%= f.label :birthday %>
+  <%= f.datetime_select :birthday %>
+
+  <%= f.hidden_field :_destroy %>
+  <p class="remove_fields" style="text-decoration: underline; color: red; cursor: pointer;">Eliminar</p>
+</fieldset>

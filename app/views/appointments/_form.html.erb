@@ -1,0 +1,39 @@
+<%= form_with(model: appointment, local: true) do |form| %>
+  <% if appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+      <ul>
+      <% appointment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :fecha %>
+    <%= form.datetime_select :fecha %>
+  </div>
+
+  <div class="field">
+    <%= form.label :exam_battery_ids %>
+    <% selected = appointment.exam_batteries.collect { |eb| eb.id } %>
+    <%= form.select :exam_battery_ids,
+                    options_from_collection_for_select(ExamBattery.all, :id, :name, selected),
+                    {
+                      include_hidden: false,
+                      prompt: 'Ninguna'
+                    },
+                    multiple: true %>
+  </div>
+
+  <%= form.fields_for :patients do |builder| %>
+    <%= render 'patient_fields', f: builder %>
+  <% end %>
+  <%= link_to_add_fields 'Agregar paciente', form, :patients %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

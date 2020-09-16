@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :profile, polymorphic: true
+  has_many :appointments
 end

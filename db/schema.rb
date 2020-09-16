@@ -46,6 +46,23 @@ ActiveRecord::Schema.define(version: 2020_09_16_154808) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "appointments", force: :cascade do |t|
+    t.datetime "fecha"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_appointments_on_user_id"
+  end
+
+  create_table "battery_selections", force: :cascade do |t|
+    t.bigint "appointment_id"
+    t.bigint "exam_battery_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_battery_selections_on_appointment_id"
+    t.index ["exam_battery_id"], name: "index_battery_selections_on_exam_battery_id"
+  end
+
   create_table "exam_associations", force: :cascade do |t|
     t.integer "order"
     t.bigint "exam_id"
@@ -93,6 +110,16 @@ ActiveRecord::Schema.define(version: 2020_09_16_154808) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "patients", force: :cascade do |t|
+    t.string "name"
+    t.string "rut"
+    t.datetime "birthday"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "appointment_id"
+    t.index ["appointment_id"], name: "index_patients_on_appointment_id"
   end
 
   create_table "patients", force: :cascade do |t|

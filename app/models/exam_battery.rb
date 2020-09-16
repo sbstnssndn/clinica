@@ -6,5 +6,8 @@ class ExamBattery < ApplicationRecord
   has_many :exam_associations
   has_many :exams, through: :exam_associations
 
+  has_many :battery_selections
+  has_many :appointments, through: :battery_selections
+
   accepts_nested_attributes_for :exam_associations, allow_destroy: true
 end

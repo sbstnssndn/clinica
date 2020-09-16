@@ -10,10 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_021523) do
+ActiveRecord::Schema.define(version: 2020_09_16_154808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "administrative_profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "last_name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.datetime "fecha"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_appointments_on_user_id"
+  end
+
+  create_table "battery_selections", force: :cascade do |t|
+    t.bigint "appointment_id"
+    t.bigint "exam_battery_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_battery_selections_on_appointment_id"
+    t.index ["exam_battery_id"], name: "index_battery_selections_on_exam_battery_id"
+  end
+
+  create_table "business_profiles", force: :cascade do |t|
+    t.integer "agreement"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "appointments", force: :cascade do |t|
     t.datetime "fecha"
@@ -61,6 +92,36 @@ ActiveRecord::Schema.define(version: 2020_09_16_021523) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "guest_business_profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "job_title"
+    t.string "phone"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "guest_person_profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "rut"
+    t.datetime "birthday"
+    t.string "phone"
+    t.string "job_title"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "patients", force: :cascade do |t|
+    t.string "name"
+    t.string "rut"
+    t.datetime "birthday"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "appointment_id"
+    t.index ["appointment_id"], name: "index_patients_on_appointment_id"
+  end
+
   create_table "patients", force: :cascade do |t|
     t.string "name"
     t.string "rut"
@@ -79,7 +140,8 @@ ActiveRecord::Schema.define(version: 2020_09_16_021523) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
+    t.integer "profile_id"
+    t.string "profile_type"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

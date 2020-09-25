@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_25_182758) do
+ActiveRecord::Schema.define(version: 2020_09_25_205054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "appointment_batteries", force: :cascade do |t|
+    t.bigint "appointment_id"
+    t.bigint "battery_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_appointment_batteries_on_appointment_id"
+    t.index ["battery_id"], name: "index_appointment_batteries_on_battery_id"
+  end
+
+  create_table "appointment_patients", force: :cascade do |t|
+    t.bigint "appointment_id"
+    t.bigint "patient_id"
+    t.boolean "ecg"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_appointment_patients_on_appointment_id"
+    t.index ["patient_id"], name: "index_appointment_patients_on_patient_id"
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "batteries", force: :cascade do |t|
     t.string "name"
@@ -41,6 +66,54 @@ ActiveRecord::Schema.define(version: 2020_09_25_182758) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "form_fields", force: :cascade do |t|
+    t.string "label"
+    t.boolean "required"
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "exam_id"
+    t.index ["exam_id"], name: "index_form_fields_on_exam_id"
+  end
+
+  create_table "form_values", force: :cascade do |t|
+    t.text "value"
+    t.bigint "form_field_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "report_id"
+    t.index ["form_field_id"], name: "index_form_values_on_form_field_id"
+    t.index ["report_id"], name: "index_form_values_on_report_id"
+  end
+
+  create_table "patients", force: :cascade do |t|
+    t.string "name"
+    t.string "rut"
+    t.string "phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.boolean "completed"
+    t.bigint "patient_id"
+    t.text "conclusions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "appointment_id"
+    t.index ["appointment_id"], name: "index_reports_on_appointment_id"
+    t.index ["patient_id"], name: "index_reports_on_patient_id"
+  end
+
+  add_foreign_key "appointment_batteries", "appointments"
+  add_foreign_key "appointment_batteries", "batteries"
+  add_foreign_key "appointment_patients", "appointments"
+  add_foreign_key "appointment_patients", "patients"
   add_foreign_key "exam_selections", "batteries"
   add_foreign_key "exam_selections", "exams"
+  add_foreign_key "form_fields", "exams"
+  add_foreign_key "form_values", "form_fields"
+  add_foreign_key "form_values", "reports"
+  add_foreign_key "reports", "appointments"
+  add_foreign_key "reports", "patients"
 end

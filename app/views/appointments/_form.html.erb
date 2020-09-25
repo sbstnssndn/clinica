@@ -1,0 +1,46 @@
+<%= form_with(model: appointment, local: true) do |form| %>
+  <% if appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+      <ul>
+      <% appointment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.datetime_select :date %>
+  </div>
+
+  <hr />
+
+  <h2>Pacientes</h2>
+  <%= form.fields_for :patients do |f| %>
+    <fieldset>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :rut %>
+      <%= f.text_field :rut %>
+
+      <%= f.label :phone %>
+      <%= f.text_field :phone %>
+    </fieldset>
+  <% end %>
+  <%= link_to 'Agregar Paciente', '#' %>
+
+  <hr />
+
+  <div class="field">
+    <%= form.label :battery_ids %>
+    <%= form.select :battery_ids, options_from_collection_for_select(Battery.all, :id, :name), { include_blank: false, multiple: true } %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

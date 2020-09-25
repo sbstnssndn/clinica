@@ -22,3 +22,6 @@ exam2 = Exam.create(name: 'Optometría cerca', price: 5000)
 ExamSelection.create(battery: Battery.first, exam: Exam.first, order: 1)
 ExamSelection.create(battery: Battery.first, exam: Exam.last, order: 2)
 ExamSelection.create(battery: Battery.last, exam: Exam.first, order: 1)
+
+Patient.create!(name: 'Seba', rut: '123', phone: '321')
+Patient.create!(name: 'Magda', rut: '789', phone: '987')

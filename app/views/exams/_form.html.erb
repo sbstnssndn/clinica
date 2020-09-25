@@ -21,6 +21,11 @@
   <% end %>
   <%= link_to_add_fields 'Agregar a una batería', form, :exam_associations %>
 
+  <%= form.fields_for :form_fields do |form_field_builder| %>
+    <%= render 'form_field_fields', f: form_field_builder %>
+  <% end %>
+  <%= link_to_add_fields 'Agregar campo', form, :form_fields %>
+
   <div class="actions">
     <%= form.submit %>
   </div>

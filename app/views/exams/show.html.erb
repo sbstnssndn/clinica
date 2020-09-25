@@ -5,5 +5,11 @@
   <%= @exam.name %>
 </p>
 
+<% @exam.form_fields.each do |field| %>
+  <p>
+    <%= field.type %>: <%= field.label %> <strong><%= field.required? ? '*' : '' %></strong>
+  </p>
+<% end %>
+
 <%= link_to 'Edit', edit_exam_path(@exam) %> |
 <%= link_to 'Back', exams_path %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_16_154808) do
+ActiveRecord::Schema.define(version: 2020_09_24_212106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,23 +46,6 @@ ActiveRecord::Schema.define(version: 2020_09_16_154808) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "appointments", force: :cascade do |t|
-    t.datetime "fecha"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_appointments_on_user_id"
-  end
-
-  create_table "battery_selections", force: :cascade do |t|
-    t.bigint "appointment_id"
-    t.bigint "exam_battery_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["appointment_id"], name: "index_battery_selections_on_appointment_id"
-    t.index ["exam_battery_id"], name: "index_battery_selections_on_exam_battery_id"
-  end
-
   create_table "exam_associations", force: :cascade do |t|
     t.integer "order"
     t.bigint "exam_id"
@@ -86,10 +69,42 @@ ActiveRecord::Schema.define(version: 2020_09_16_154808) do
     t.bigint "exam_battery_id", null: false
   end
 
+  create_table "exam_results", force: :cascade do |t|
+    t.bigint "exam_id"
+    t.boolean "verified"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "patient_id"
+    t.index ["exam_id"], name: "index_exam_results_on_exam_id"
+    t.index ["patient_id"], name: "index_exam_results_on_patient_id"
+  end
+
   create_table "exams", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "form_fields", force: :cascade do |t|
+    t.integer "min"
+    t.integer "max"
+    t.boolean "required"
+    t.string "label"
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "exam_id"
+    t.index ["exam_id"], name: "index_form_fields_on_exam_id"
+  end
+
+  create_table "form_values", force: :cascade do |t|
+    t.text "value"
+    t.bigint "form_field_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["form_field_id"], name: "index_form_values_on_form_field_id"
+    t.index ["user_id"], name: "index_form_values_on_user_id"
   end
 
   create_table "guest_business_profiles", force: :cascade do |t|
@@ -122,16 +137,6 @@ ActiveRecord::Schema.define(version: 2020_09_16_154808) do
     t.index ["appointment_id"], name: "index_patients_on_appointment_id"
   end
 
-  create_table "patients", force: :cascade do |t|
-    t.string "name"
-    t.string "rut"
-    t.datetime "birthday"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "appointment_id"
-    t.index ["appointment_id"], name: "index_patients_on_appointment_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -151,5 +156,10 @@ ActiveRecord::Schema.define(version: 2020_09_16_154808) do
   add_foreign_key "battery_selections", "exam_batteries"
   add_foreign_key "exam_associations", "exam_batteries"
   add_foreign_key "exam_associations", "exams"
+  add_foreign_key "exam_results", "exams"
+  add_foreign_key "exam_results", "patients"
+  add_foreign_key "form_fields", "exams"
+  add_foreign_key "form_values", "form_fields"
+  add_foreign_key "form_values", "users"
   add_foreign_key "patients", "appointments"
 end

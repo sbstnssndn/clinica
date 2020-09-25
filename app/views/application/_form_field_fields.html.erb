@@ -1,0 +1,15 @@
+<fieldset>
+  <%= f.label :label %>
+  <%= f.text_field :label %>
+
+  <%= f.label :required, style: 'display: inline;' do %>
+    <%= f.check_box :required %>
+    Requerido
+  <% end %>
+
+  <%= f.label :type %>
+  <%= f.text_field :type %>
+
+  <%= f.hidden_field :_destroy %>
+  <p class="remove_fields" style="text-decoration: underline; color: red; cursor: pointer; display: block;">Eliminar</p>
+</fieldset>

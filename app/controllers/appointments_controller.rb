@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy]
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
 
   # GET /appointments
   # GET /appointments.json
@@ -73,7 +73,7 @@ class AppointmentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def appointment_params
       params.require(:appointment).permit(
-        :fecha,
+        :date,
         exam_battery_ids: [],
         patients_attributes: [:id, :name, :rut, :birthday]
       )

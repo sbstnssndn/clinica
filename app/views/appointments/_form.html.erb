@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :fecha %>
-    <%= form.datetime_select :fecha %>
+    <%= form.label :date, 'Fecha y hora' %>
+    <%= form.datetime_select :date %>
   </div>
 
   <div class="field">
@@ -22,12 +22,17 @@
     <%= form.select :exam_battery_ids,
                     options_from_collection_for_select(ExamBattery.all, :id, :name, selected),
                     {
-                      include_hidden: false,
-                      prompt: 'Ninguna'
+                      include_hidden: false
                     },
                     multiple: true %>
   </div>
 
+  <h2>Datos del usuario</h2>
+  <%= form.fields_for current_user.profile do |builder| %>
+    <%= render "appointments/user_profiles/#{current_user.profile_type.underscore}", f: builder %>
+  <% end %>
+
+  <h2>Pacientes</h2>
   <%= form.fields_for :patients do |builder| %>
     <%= render 'patient_fields', f: builder %>
   <% end %>

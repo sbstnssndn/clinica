@@ -1,0 +1,11 @@
+<fieldset>
+  <%= f.hidden_field :report_id, value: @report.id %>
+  <%= f.hidden_field :indicator_id, value: f.object.indicator.id %>
+
+  <%= f.object.indicator.name %> (<%= f.object.indicator.unit %>):
+
+  <div class="fields">
+    <%= f.label :value %>
+    <%= f.text_field :value %>
+  </div>
+</fieldset>

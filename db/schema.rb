@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_25_031120) do
+ActiveRecord::Schema.define(version: 2020_09_25_043127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,15 @@ ActiveRecord::Schema.define(version: 2020_09_25_031120) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "indicators", force: :cascade do |t|
+    t.string "name"
+    t.string "unit"
+    t.bigint "exam_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_indicators_on_exam_id"
+  end
+
   create_table "patients", force: :cascade do |t|
     t.string "name"
     t.string "rut"
@@ -135,6 +144,26 @@ ActiveRecord::Schema.define(version: 2020_09_25_031120) do
     t.datetime "updated_at", null: false
     t.bigint "appointment_id"
     t.index ["appointment_id"], name: "index_patients_on_appointment_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.bigint "appointment_id"
+    t.bigint "patient_id"
+    t.boolean "completed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["appointment_id"], name: "index_reports_on_appointment_id"
+    t.index ["patient_id"], name: "index_reports_on_patient_id"
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.string "value"
+    t.bigint "indicator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "report_id"
+    t.index ["indicator_id"], name: "index_results_on_indicator_id"
+    t.index ["report_id"], name: "index_results_on_report_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -161,5 +190,10 @@ ActiveRecord::Schema.define(version: 2020_09_25_031120) do
   add_foreign_key "form_fields", "exams"
   add_foreign_key "form_values", "form_fields"
   add_foreign_key "form_values", "users"
+  add_foreign_key "indicators", "exams"
   add_foreign_key "patients", "appointments"
+  add_foreign_key "reports", "appointments"
+  add_foreign_key "reports", "patients"
+  add_foreign_key "results", "indicators"
+  add_foreign_key "results", "reports"
 end

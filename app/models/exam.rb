@@ -3,6 +3,7 @@
 class Exam < ApplicationRecord
   has_many :exam_associations
   has_many :exam_batteries, through: :exam_associations
+  has_many :indicators
 
   accepts_nested_attributes_for :exam_associations, allow_destroy: true
 end

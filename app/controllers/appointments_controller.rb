@@ -75,7 +75,7 @@ class AppointmentsController < ApplicationController
       params.require(:appointment).permit(
         :date,
         exam_battery_ids: [],
-        patients_attributes: [:id, :name, :rut, :birthday]
+        patients_attributes: [:id, :name, :rut, :birthday, :_destroy]
       )
     end
 end

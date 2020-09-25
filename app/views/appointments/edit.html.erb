@@ -2,5 +2,18 @@
 
 <%= render 'form', appointment: @appointment %>
 
+<%= form_with(model: Report, local: true) do |f| %>
+  <%= f.hidden_field :appointment_id, value: @appointment.id %>
+  <%= f.select :patient_id,
+                options_from_collection_for_select(
+                  @appointment.patients, :id, :name
+                ),
+                {
+                  include_hidden: false
+                } %>
+
+  <%= f.submit 'Generar Informe Médico' %>
+<% end %>
+
 <%= link_to 'Show', @appointment %> |
 <%= link_to 'Back', appointments_path %>

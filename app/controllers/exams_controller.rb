@@ -69,6 +69,10 @@ class ExamsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exam_params
-      params.require(:exam).permit(:name, :price)
+      params.require(:exam).permit(
+        :name,
+        :price,
+        form_fields_attributes: [:id, :label, :required, :type, :exam_id]
+      )
     end
 end

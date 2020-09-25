@@ -6,14 +6,25 @@
 </p>
 
 <p>
-  <strong>Battery:</strong>
-  <%= @appointment.battery %>
+  <strong>Batteries:</strong>
+  <% @appointment.batteries.each do |battery| %>
+    <%= link_to battery.name, battery %>,
+  <% end %>
 </p>
 
 <p>
-  <strong>Patient:</strong>
-  <%= @appointment.patient %>
+  <strong>Patients:</strong>
+  <% @appointment.patients.each do |patient| %>
+    <%= link_to patient.name, patient %>,
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_appointment_path(@appointment) %> |
 <%= link_to 'Back', appointments_path %>
+
+<%= form_with(model: @report, local: true) do |f| %>
+  <%= f.hidden_field :patient_id, value: @appointment.patients.first.id %>
+  <%= f.hidden_field :appointment_id, value: @appointment.id %>
+  <%= f.hidden_field :completed, value: false %>
+  <%= f.submit 'Generar informe' %>
+<% end %>

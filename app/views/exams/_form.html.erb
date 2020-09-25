@@ -21,6 +21,10 @@
     <%= form.number_field :price %>
   </div>
 
+  <%= form.fields_for :form_fields, FormField.new do |f| %>
+    <%= render 'form_field_fields', f: f %>
+  <% end %>
+
   <div class="actions">
     <%= form.submit %>
   </div>

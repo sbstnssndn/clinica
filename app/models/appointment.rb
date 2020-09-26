@@ -7,4 +7,8 @@ class Appointment < ApplicationRecord
   has_many :batteries, through: :appointment_batteries, dependent: :destroy
 
   has_many :reports
+
+  def exam_selections
+    ExamSelection.where(battery: batteries.order(:order))
+  end
 end

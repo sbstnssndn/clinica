@@ -28,7 +28,7 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       if @report.save
-        @report.build_form_values!
+        @report.create_form_values!
         format.html { redirect_to @report, notice: 'Report was successfully created.' }
         format.json { render :show, status: :created, location: @report }
       else

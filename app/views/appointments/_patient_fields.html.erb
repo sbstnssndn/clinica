@@ -1,0 +1,13 @@
+<fieldset>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :rut %>
+  <%= f.text_field :rut %>
+
+  <%= f.label :phone %>
+  <%= f.text_field :phone %>
+
+  <%= f.hidden_field :_destroy %>
+  <%= link_to 'remove', '#', class: 'remove_fields' %>
+</fieldset>

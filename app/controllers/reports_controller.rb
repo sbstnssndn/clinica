@@ -28,6 +28,7 @@ class ReportsController < ApplicationController
 
     respond_to do |format|
       if @report.save
+        @report.build_form_values!
         format.html { redirect_to @report, notice: 'Report was successfully created.' }
         format.json { render :show, status: :created, location: @report }
       else
@@ -74,7 +75,8 @@ class ReportsController < ApplicationController
         :patient_id,
         :conclusions,
         :appointment_id,
-        form_values_attributes: [:id, :form_field_id, :report_id, :value]
+        form_values_attributes: [:id, :form_field_id, :report_id, :value],
+        patient_attributes: [:id, :name, :rut, :phone]
       )
     end
 end

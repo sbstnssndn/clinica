@@ -1,3 +1,4 @@
+# Esta clase representa la adición de un examen a una batería
 class ExamSelection < ApplicationRecord
   belongs_to :exam
   belongs_to :battery

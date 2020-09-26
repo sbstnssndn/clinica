@@ -11,19 +11,42 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :completed %>
-    <%= form.check_box :completed %>
-  </div>
+  <h2>Datos Paciente</h2>
+  <%= form.fields_for :patient do |f| %>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
 
-  <div class="field">
-    <%= form.label :patient_id %>
-    <%= form.text_field :patient_id %>
-  </div>
+    <div class="field">
+      <%= f.label :rut %>
+      <%= f.text_field :rut %>
+    </div>
 
+    <div class="field">
+      <%= f.label :phone %>
+      <%= f.text_field :phone %>
+    </div>
+  <% end %>
+
+  <h2>Exámenes</h2>
+  <%= form.fields_for :form_values do |f| %>
+    <div class="field">
+      <%= f.label :value, f.object.form_field.label %>
+      <%= f.text_field :value %>
+    </div>
+  <% end %>
+
+  <h2>Conclusiones</h2>
   <div class="field">
     <%= form.label :conclusions %>
     <%= form.text_area :conclusions %>
+  </div>
+
+  <h2>Completar informe</h2>
+  <div class="field">
+    <%= form.check_box :completed %>
+    <%= form.label :completed, 'Completar informe', style: 'display:inline;' %>
   </div>
 
   <div class="actions">

@@ -21,11 +21,13 @@
     <%= form.number_field :price %>
   </div>
 
-  <%= form.fields_for :form_fields, FormField.new do |f| %>
+  <h2>Campos</h2>
+  <%= form.fields_for :form_fields do |f| %>
     <%= render 'form_field_fields', f: f %>
   <% end %>
+  <%= link_to_add_fields 'Agregar campo', form, :form_fields %>
 
-  <div class="actions">
+  <div class="actions" style="margin-top: 30px;">
     <%= form.submit %>
   </div>
 <% end %>

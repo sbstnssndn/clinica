@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_28_211438) do
+ActiveRecord::Schema.define(version: 2020_09_28_221727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,8 @@ ActiveRecord::Schema.define(version: 2020_09_28_211438) do
     t.datetime "updated_at", null: false
     t.integer "formable_id"
     t.string "formable_type"
+    t.integer "min"
+    t.integer "max"
   end
 
   create_table "form_values", force: :cascade do |t|

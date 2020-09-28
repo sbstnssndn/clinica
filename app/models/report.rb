@@ -1,7 +1,7 @@
 class Report < ApplicationRecord
+  include Submittable
+
   belongs_to :patient
-  has_many :form_values, dependent: :destroy
-  accepts_nested_attributes_for :form_values
   accepts_nested_attributes_for :patient
 
   belongs_to :appointment

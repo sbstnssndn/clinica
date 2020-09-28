@@ -40,7 +40,7 @@
           <h3><%= exam.name %></h3>
           <ul>
 
-            <% exam_form_values = report.form_values.where(form_field: FormField.where(exam: exam)) %>
+            <% exam_form_values = report.form_values.where(form_field: exam.form_fields) %>
             <%= form.fields_for :form_values, exam_form_values do |f| %>
               <li>
                 <div class="field">

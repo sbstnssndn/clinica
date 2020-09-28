@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_28_151936) do
+ActiveRecord::Schema.define(version: 2020_09_28_211438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(version: 2020_09_28_151936) do
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "exam_id"
-    t.index ["exam_id"], name: "index_form_fields_on_exam_id"
+    t.integer "formable_id"
+    t.string "formable_type"
   end
 
   create_table "form_values", force: :cascade do |t|
@@ -81,9 +81,9 @@ ActiveRecord::Schema.define(version: 2020_09_28_151936) do
     t.bigint "form_field_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "report_id"
+    t.integer "submittable_id"
+    t.string "submittable_type"
     t.index ["form_field_id"], name: "index_form_values_on_form_field_id"
-    t.index ["report_id"], name: "index_form_values_on_report_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -111,9 +111,7 @@ ActiveRecord::Schema.define(version: 2020_09_28_151936) do
   add_foreign_key "appointment_patients", "patients"
   add_foreign_key "exam_selections", "batteries"
   add_foreign_key "exam_selections", "exams"
-  add_foreign_key "form_fields", "exams"
   add_foreign_key "form_values", "form_fields"
-  add_foreign_key "form_values", "reports"
   add_foreign_key "reports", "appointments"
   add_foreign_key "reports", "patients"
 end

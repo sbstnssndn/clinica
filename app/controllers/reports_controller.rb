@@ -87,14 +87,15 @@ class ReportsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def report_params
-      params.require(:report).permit(
-        :completed,
-        :patient_id,
-        :conclusions,
-        :appointment_id,
-        form_values_attributes: [:id, :form_field_id, :report_id, :value],
-        patient_attributes: [:id, :name, :rut, :phone],
-        patient_ids: []
-      )
+      params.require(:report).permit!
+      # params.require(:report).permit(
+      #   :completed,
+      #   :patient_id,
+      #   :conclusions,
+      #   :appointment_id,
+      #   form_values_attributes: [:id, :form_field_id, :report_id, :value],
+      #   patient_attributes: [:id, :name, :rut, :phone],
+      #   patient_ids: []
+      # )
     end
 end

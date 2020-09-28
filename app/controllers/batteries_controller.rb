@@ -15,6 +15,7 @@ class BatteriesController < ApplicationController
   # GET /batteries/new
   def new
     @battery = Battery.new
+    @battery.exams.build
   end
 
   # GET /batteries/1/edit

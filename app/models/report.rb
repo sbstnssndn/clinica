@@ -52,4 +52,5 @@ class Report < ApplicationRecord
       end
     end
   end
+
 end

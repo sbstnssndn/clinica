@@ -38,6 +38,23 @@ class ReportsController < ApplicationController
     end
   end
 
+  def bulk_create
+    report_params[:patient_ids].each do |patient_id|
+      report = Report.new(
+        patient_id: patient_id,
+        appointment_id: report_params[:appointment_id]
+      )
+
+      if report.save
+        report.create_form_values!
+      else
+        return render :show, alert: "Error creando reporte para #{Patient.find_by_id(patient_id).name}"
+      end
+    end
+
+    redirect_to reports_path, notice: 'Reports were successfully created.'
+  end
+
   # PATCH/PUT /reports/1
   # PATCH/PUT /reports/1.json
   def update
@@ -76,7 +93,8 @@ class ReportsController < ApplicationController
         :conclusions,
         :appointment_id,
         form_values_attributes: [:id, :form_field_id, :report_id, :value],
-        patient_attributes: [:id, :name, :rut, :phone]
+        patient_attributes: [:id, :name, :rut, :phone],
+        patient_ids: []
       )
     end
 end

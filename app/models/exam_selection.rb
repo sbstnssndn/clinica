@@ -10,4 +10,8 @@ class ExamSelection < ApplicationRecord
   # add_index :exam_selections, [:exam_id, :battery_id], unique: true
   # esto asegura que haya una regla en la misma db que prohiba este caso
   validates_uniqueness_of :battery, scope: :exam
+
+  def self.batteries_from_exam_except(exam_id, wanted_battery_ids)
+    where(exam: exam_id).where.not(battery_id: wanted_battery_ids)
+  end
 end

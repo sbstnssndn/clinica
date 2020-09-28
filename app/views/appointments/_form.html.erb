@@ -28,10 +28,11 @@
 
   <div class="field">
     <%= form.label :battery_ids %>
+    <% selected = appointment.batteries.collect { |b| b.id } %>
     <% # include_blank evita MOSTRAR la primera opción en blanco %>
     <% # include_hidden evita ENVIAR el primer valor en blanco en el hash de baterías %>
     <%= form.select :battery_ids,
-                    options_from_collection_for_select(Battery.all, :id, :name),
+                    options_from_collection_for_select(Battery.all, :id, :name, selected),
                     { include_blank: false, include_hidden: false },
                     multiple: true %>
   </div>

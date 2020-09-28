@@ -18,12 +18,22 @@
 
   <div class="field">
     <%= form.label :certification %>
-    <%= form.text_area :certification %>
+    <%= form.text_field :certification %>
   </div>
 
   <div class="field">
     <%= form.label :order %>
     <%= form.number_field :order %>
+  </div>
+
+  <h2>Exámenes</h2>
+  <div class="field">
+    <%= form.label :exam_ids %>
+    <% selected = battery.exams.collect { |e| e.id } %>
+    <%= form.select :exam_ids,
+                    options_from_collection_for_select(Exam.all, :id, :name, selected),
+                    { include_blank: false, include_hidden: false },
+                    multiple: true %>
   </div>
 
   <div class="actions">

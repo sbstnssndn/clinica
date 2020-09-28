@@ -12,19 +12,22 @@
   <% end %>
 </p>
 
-<p>
-  <strong>Patients:</strong>
+<h3>Pacientes</h3>
+<ul>
   <% @appointment.patients.each do |patient| %>
-    <%= link_to patient.name, patient %>,
+    <li>
+      <%= check_box_tag "report[patient_ids][]", patient.id, false, id: dom_id(patient), form: 'reports' %> <%= link_to patient.name, patient %> <br />
+      <%= hidden_field_tag "report[appointment_id]", @appointment.id, form: 'reports' %>
+    </li>
   <% end %>
-</p>
+</ul>
 
 <%= link_to 'Edit', edit_appointment_path(@appointment) %> |
 <%= link_to 'Back', appointments_path %>
 
-<%= form_with(model: @report, local: true) do |f| %>
-  <%= f.hidden_field :patient_id, value: @appointment.patients.first.id %>
-  <%= f.hidden_field :appointment_id, value: @appointment.id %>
-  <%= f.hidden_field :completed, value: false %>
-  <%= f.submit 'Generar informe' %>
+<%= form_with(model: @report, local: true, id: 'reports', url: bulk_create_reports_path) do |f| %>
+  <% #f.hidden_field :patient_id, value: @appointment.patients.first.id %>
+  <% #f.hidden_field :appointment_id, value: @appointment.id %>
+  <% #f.hidden_field :completed, value: false %>
+  <%= f.submit 'Generar informes' %>
 <% end %>

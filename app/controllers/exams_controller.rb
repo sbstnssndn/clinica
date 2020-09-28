@@ -72,7 +72,10 @@ class ExamsController < ApplicationController
       params.require(:exam).permit(
         :name,
         :price,
-        form_fields_attributes: [:id, :label, :required, :type, :exam_id]
+        form_fields_attributes: [
+          :id, :label, :required, :type, :exam_id, :_destroy
+        ],
+        battery_ids: []
       )
     end
 end

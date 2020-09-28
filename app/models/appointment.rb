@@ -8,6 +8,8 @@ class Appointment < ApplicationRecord
 
   has_many :reports
 
+  validates_presence_of :patients
+
   def exam_selections
     ExamSelection.where(battery: batteries.order(:order))
   end

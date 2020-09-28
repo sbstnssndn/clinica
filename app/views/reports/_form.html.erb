@@ -29,13 +29,33 @@
     </div>
   <% end %>
 
-  <h2>Exámenes</h2>
-  <%= form.fields_for :form_values do |f| %>
-    <div class="field">
-      <%= f.label :value, f.object.form_field.label %>
-      <%= f.text_field :value %>
-    </div>
+  <h2>Baterías</h2>
+  <% report.batteries_with_exams.each do |hash| %>
+    <% # cada elemento es un hash {battery: B, exams: [e1,e2,...]} %>
+    <%= hash[:battery].name %>
+    <ol>
+      <% hash[:exams].each do |exam| %>
+        <% # TODO: encontrar los form values que pertenecen a cada examen %>
+        <li>
+          <h3><%= exam.name %></h3>
+          <ul>
+
+            <% exam_form_values = report.form_values.where(form_field: FormField.where(exam: exam)) %>
+            <%= form.fields_for :form_values, exam_form_values do |f| %>
+              <li>
+                <div class="field">
+                  <%= f.label :value, f.object.form_field.label %>
+                  <%= f.text_field :value %>
+                </div>
+              </li>
+            <% end %>
+
+          </ul>
+        </li>
+      <% end %>
+    </ol>
   <% end %>
+
 
   <h2>Conclusiones</h2>
   <div class="field">

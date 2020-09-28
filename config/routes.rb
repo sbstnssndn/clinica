@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :appointments
-  resources :reports
+  resources :reports do
+    collection do
+      post 'bulk_create'
+    end
+  end
   resources :patients
   resources :exams
   resources :batteries

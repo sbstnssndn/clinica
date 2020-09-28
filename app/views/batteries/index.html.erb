@@ -2,29 +2,36 @@
 
 <h1>Batteries</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Certification</th>
-      <th>Order</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @batteries.each do |battery| %>
+<%= form_tag update_order_batteries_path, method: :put do %>
+  <table>
+    <thead>
       <tr>
-        <td><%= battery.name %></td>
-        <td><%= battery.certification %></td>
-        <td><%= battery.order %></td>
-        <td><%= link_to 'Show', battery %></td>
-        <td><%= link_to 'Edit', edit_battery_path(battery) %></td>
-        <td><%= link_to 'Destroy', battery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th>Certification</th>
+        <th>Order</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @batteries.order(:order).each do |battery| %>
+        <%= fields_for 'batteries[]', battery do |f| %>
+          <tr>
+            <td><%= battery.name %></td>
+            <td><%= battery.certification %></td>
+            <td>
+              <%= f.number_field :order %>
+            </td>
+            <td><%= link_to 'Show', battery %></td>
+            <td><%= link_to 'Edit', edit_battery_path(battery) %></td>
+            <td><%= link_to 'Destroy', battery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <%= submit_tag 'Reordenar' %>
+<% end %>
 
 <br>
 

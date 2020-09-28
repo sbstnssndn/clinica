@@ -40,6 +40,16 @@ class BatteriesController < ApplicationController
   # PATCH/PUT /batteries/1
   # PATCH/PUT /batteries/1.json
   def update
+    # TODO: Refactorizar esto, hay que editar un ExamSelection dentro de la vista de baterías
+    # tal vez sea mejor crear ExamSelections con nested attrs en vez de exámenes
+    params[:battery][:exams_attributes].each do |_, v|
+      es = ExamSelection.find_by(
+        exam_id: v[:exam_selection][:exam_id],
+        battery_id: v[:exam_selection][:battery_id]
+      )
+      es.update!(order: v[:exam_selection][:order]) if es.present?
+    end
+
     respond_to do |format|
       if @battery.update(battery_params)
         format.html { redirect_to @battery, notice: 'Battery was successfully updated.' }
@@ -61,6 +71,18 @@ class BatteriesController < ApplicationController
     end
   end
 
+  # PUT /batteries/edit_order
+  def edit_order
+    @products = Product.find(params[:product_ids])
+    params[:battery_ids]
+    Battery.update_all({  })
+  end
+
+  def update_order
+    Battery.update(params[:batteries].keys, params[:batteries].values)
+    redirect_to batteries_url, notice: 'Orden actualizado!'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_battery
@@ -70,7 +92,16 @@ class BatteriesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def battery_params
       params.require(:battery).permit(
-        :name, :certification, :order, exam_ids: []
+        :name,
+        :certification,
+        :order,
+        exam_ids: [],
+        exams_attributes: [
+          :id, :name, :price
+        ],
+        exam_selections_attributes: [
+          :id, :order, :exam_id, :battery_id
+        ]
       )
     end
 end

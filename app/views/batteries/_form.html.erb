@@ -27,6 +27,26 @@
   </div>
 
   <h2>Exámenes</h2>
+  <%= form.fields_for :exams, form.object.exams.order(:order) do |f| %>
+    <p>
+      <%= f.label :name, 'Examen' %>
+      <%= f.text_field :name %>
+
+      <%= f.label :price, 'Precio' %>
+      <%= f.text_field :price %>
+
+      <% es = ExamSelection.find_by(exam: f.object, battery: battery) %>
+      <%= f.fields_for :exam_selection, es do |builder| %>
+        <%= builder.label :order %>
+        <%= builder.text_field :order %>
+
+        <%= builder.hidden_field :exam_id %>
+        <%= builder.hidden_field :battery_id %>
+      <% end %>
+    </p>
+  <% end %>
+
+  <h2>Agregar Exámenes</h2>
   <div class="field">
     <%= form.label :exam_ids %>
     <% selected = battery.exams.collect { |e| e.id } %>

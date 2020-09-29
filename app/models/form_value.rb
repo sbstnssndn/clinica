@@ -2,7 +2,7 @@ class FormValue < ApplicationRecord
   belongs_to :form_field
   belongs_to :submittable, polymorphic: true
 
-  validate :value_is_valid
+  validate :value_is_valid, on: :update
 
   private
 

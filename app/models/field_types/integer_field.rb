@@ -1,6 +1,6 @@
 class IntegerField < FormField
   def add_validation_errors(form_value)
-    unless form_value.blank? || form_value.value.match(/\A[+-]?\d+\Z/)
+    unless form_value.value.blank? || form_value.value.match(/\A[+-]?\d+\Z/)
       form_value.errors.add :value, 'must be an integer'
     end
 

@@ -27,14 +27,7 @@
   </div>
 
 
-
-  <h2>Crear exámenes</h2>
-  <%= form.fields_for :exams do |f| %>
-    <%= render 'exam_fields', f: f, battery: battery %>
-  <% end %>
-  <%= link_to_add_fields 'Agregar examen', form, :exams %>
-
-  <h2>Agregar exámenes existentes</h2>
+  <h2>Agregar exámenes</h2>
   <div class="field">
     <%= form.label :exam_ids %>
     <% selected = battery.exams.collect { |e| e.id } %>

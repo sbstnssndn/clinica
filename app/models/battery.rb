@@ -6,6 +6,7 @@ class Battery < ApplicationRecord
   has_many :appointments, through: :appointment_batteries
 
   accepts_nested_attributes_for :exams
+  accepts_nested_attributes_for :exam_selections
 
   validates_uniqueness_of :name
 end

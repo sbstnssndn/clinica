@@ -1,5 +1,5 @@
 class BatteriesController < ApplicationController
-  before_action :set_battery, only: [:show, :edit, :update, :destroy]
+  before_action :set_battery, only: [:show, :edit, :update, :destroy, :edit_order]
 
   # GET /batteries
   # GET /batteries.json
@@ -10,6 +10,7 @@ class BatteriesController < ApplicationController
   # GET /batteries/1
   # GET /batteries/1.json
   def show
+    @exam_selections = @battery.exam_selections.order(:order)
   end
 
   # GET /batteries/new
@@ -41,16 +42,6 @@ class BatteriesController < ApplicationController
   # PATCH/PUT /batteries/1
   # PATCH/PUT /batteries/1.json
   def update
-    # TODO: Refactorizar esto, hay que editar un ExamSelection dentro de la vista de baterías
-    # tal vez sea mejor crear ExamSelections con nested attrs en vez de exámenes
-    params[:battery][:exams_attributes].each do |_, v|
-      es = ExamSelection.find_by(
-        exam_id: v[:exam_selection][:exam_id],
-        battery_id: v[:exam_selection][:battery_id]
-      )
-      es.update!(order: v[:exam_selection][:order]) if es.present?
-    end
-
     respond_to do |format|
       if @battery.update(battery_params)
         format.html { redirect_to @battery, notice: 'Battery was successfully updated.' }
@@ -72,11 +63,8 @@ class BatteriesController < ApplicationController
     end
   end
 
-  # PUT /batteries/edit_order
+  # GET /batteries/1/edit_order => order
   def edit_order
-    @products = Product.find(params[:product_ids])
-    params[:battery_ids]
-    Battery.update_all({  })
   end
 
   def update_order

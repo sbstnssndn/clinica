@@ -1,0 +1,7 @@
+<h1>Ordenar exámenes de <%= @battery.name %></h1>
+
+<%= render 'edit_order_form', battery: @battery %>
+
+<%= link_to 'Show', @battery %> |
+<%= link_to 'Edit', edit_battery_path(@battery) %> |
+<%= link_to 'Back', batteries_path %>

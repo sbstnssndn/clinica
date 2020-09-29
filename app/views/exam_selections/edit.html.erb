@@ -1,0 +1,18 @@
+<h1>Ordenar exámenes de <%= @battery.name %></h1>
+
+<%= form_tag(reorder_exam_selections_path, method: :put) do %>
+  <ol>
+    <% @exam_selections.each do |exam_selection| %>
+       <li>
+         <%= exam_selection.exam.name %>
+         <%= text_field_tag 'exam_selection_ids[]', exam_selection.id, value: exam_selection.order %>
+       </li>
+    <% end %>
+  </ol>
+
+  <%= submit_tag 'Reordenar' %>
+<% end %>
+
+<%= link_to 'Show', @battery %> |
+<%= link_to 'Edit', edit_battery_path(@battery) %> |
+<%= link_to 'Back', batteries_path %>

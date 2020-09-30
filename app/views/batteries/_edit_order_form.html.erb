@@ -1,0 +1,24 @@
+<%= form_with(model: battery, local: true, url: update_order_battery_path(battery), method: :put) do |form| %>
+  <%= form.fields_for :exam_selections do |f| %>
+    <% if f.object.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(f.object.errors.count, "error") %> prohibited this battery from being saved:</h2>
+
+        <ul>
+          <% f.object.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= f.label f.object.exam.name %>
+      <%= f.number_field :order %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.submit 'Ordenar' %>
+  </div>
+
+<% end %>

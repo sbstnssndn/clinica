@@ -1,6 +1,8 @@
 class Report < ApplicationRecord
   include Submittable
 
+  validates_presence_of :patient
+
   belongs_to :patient
   accepts_nested_attributes_for :patient
 
@@ -16,13 +18,16 @@ class Report < ApplicationRecord
     batteries.order(:order).each do |battery|
       temp = { battery: battery, exams: [] }
       if result.empty?
-        battery.exams.map {|e| temp[:exams] << e}
+        battery.exams.map do |e|
+          temp[:exams] << e
+        end
       else
         battery.exams.each do |exam|
-          result.each do |hash|
-            next if hash[:exams].include? exam
-            temp[:exams] << exam
+          exam_already_added = false
+          result.each do |jash|
+            exam_already_added = true if jash[:exams].include?(exam)
           end
+          temp[:exams] << exam unless exam_already_added
         end
       end
       result << temp if temp[:exams].size > 0

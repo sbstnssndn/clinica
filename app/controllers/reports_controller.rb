@@ -39,16 +39,23 @@ class ReportsController < ApplicationController
   end
 
   def bulk_create
+    # TODO: Refactor. Se maneja el rendereo de una vista en otra en caso de error
+    return redirect_to appointment_path(report_params[:appointment_id]), alert: "Error" if report_params[:patient_ids].nil? || report_params[:patient_ids].empty?
     report_params[:patient_ids].each do |patient_id|
       report = Report.new(
         patient_id: patient_id,
         appointment_id: report_params[:appointment_id]
       )
 
-      if report.save
-        report.create_form_values!
-      else
-        return render :show, alert: "Error creando reporte para #{Patient.find_by_id(patient_id).name}"
+      Report.transaction do
+        begin
+          # TODO: esto debería ser al revés. Crear los form values en memoria y
+          # luego guardar todo el objeto report con sus hijos (form_values)
+          report.save!
+          report.create_form_values!
+        rescue StandardError
+          return redirect_to appointment_path(report_params[:appointment_id]), alert: "Error creando reporte para #{Patient.find_by_id(patient_id).name}"
+        end
       end
     end
 

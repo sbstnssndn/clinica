@@ -1,19 +1,25 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @battery.name %>
-</p>
+<h1><%= @battery.name %> (#<%= @battery.order %>)</h1>
 
 <p>
-  <strong>Certification:</strong>
-  <%= @battery.certification %>
+  <em><%= @battery.certification %></em>
 </p>
 
-<p>
-  <strong>Order:</strong>
-  <%= @battery.order %>
-</p>
+<h2>Exámenes</h2>
+<%= form_with(model: @battery, local: true) do |f| %>
+  <ol>
+    <%= f.fields_for :exam_selections, @exam_selections do |builder| %>
+      <li>
+        <%= builder.object.exam.name %>
+        <%= builder.number_field :order %>
+      </li>
+    <% end %>
+  </ol>
+
+  <%= f.submit 'Guardar orden' %>
+<% end %>
+
 
 <%= link_to 'Edit', edit_battery_path(@battery) %> |
 <%= link_to 'Back', batteries_path %>

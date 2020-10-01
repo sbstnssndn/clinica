@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_29_155739) do
+ActiveRecord::Schema.define(version: 2020_10_01_221424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 2020_09_29_155739) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "appointment_id"
+    t.jsonb "snapshot"
     t.index ["appointment_id"], name: "index_reports_on_appointment_id"
     t.index ["patient_id"], name: "index_reports_on_patient_id"
   end

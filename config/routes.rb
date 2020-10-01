@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     collection do
       post :bulk_create
     end
+
+    member do
+      get :complete
+    end
   end
   resources :patients
   resources :exams

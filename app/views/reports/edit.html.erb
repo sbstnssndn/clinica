@@ -2,5 +2,9 @@
 
 <%= render 'form', report: @report %>
 
+<%= form_with(model: @report, url: complete_report_path, method: :get, local: true) do |f| %>
+  <%= f.submit 'Completar' %>
+<% end %>
+
 <%= link_to 'Show', @report %> |
 <%= link_to 'Back', reports_path %>

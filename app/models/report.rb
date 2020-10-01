@@ -2,6 +2,7 @@ class Report < ApplicationRecord
   include Submittable
 
   validates_presence_of :patient
+  # validate :report_not_completed, on: :update
 
   belongs_to :patient
   accepts_nested_attributes_for :patient
@@ -50,11 +51,69 @@ class Report < ApplicationRecord
     # appointment.exam_selections.map { |es| es.exam }.uniq
   end
 
+  def exam_selections
+    ExamSelection.where(battery: appointment.batteries)
+  end
+
+  def create_fields
+    appointment.batteries.each do |battery|
+      ExamSelection.where(battery: battery).each do |selection|
+        # cada selection identifica a un examen de la batería
+        selection.exam.form_fields.each do |field|
+          form_values.create!(
+            form_field: field,
+            value: nil,
+            data: { battery: battery.name, exam: selection.exam.name }
+          )
+        end
+      end
+    end
+  end
+
+  def complete
+    self.completed = true
+    self.snapshot = generate_snapshot
+    save ? true : false
+  end
+
+  def generate_snapshot
+    full_report = { created_at: Time.now, batteries: [] }
+    batteries_with_exams.each do |element|
+      battery = element[:battery]
+      new_battery = { name: battery.name, exams: [] }
+      element[:exams].each do |exam|
+        new_exam = { name: exam.name, fields: [] }
+        exam.form_fields.each do |field|
+          new_field = {
+            label: field.label,
+            required: field.required,
+            type: field.type,
+            min: field.min,
+            max: field.max,
+            value: FormValue.find_by(form_field: field).try(:value)
+          }
+          new_exam[:fields] << new_field
+        end
+        new_battery[:exams] << new_exam
+      end
+      full_report[:batteries] << new_battery
+    end
+    full_report
+  end
+
   def create_form_values!
     exams.each do |exam|
       exam.form_fields.each do |field|
         form_values.create!(form_field: field, value: nil)
       end
+    end
+  end
+
+  private
+
+  def report_not_completed
+    if self.completed? && self.snapshot.present?
+      errors[:base] << 'No se puede editar un informe completado.'
     end
   end
 

@@ -1,0 +1,38 @@
+<p>
+  <strong>Completed:</strong>
+  <%= @report.completed %>
+</p>
+
+<p>
+  <strong>Patient:</strong>
+  <%= @report.patient %>
+</p>
+
+<p>
+  <strong>Conclusions:</strong>
+  <%= @report.conclusions %>
+</p>
+
+<p>
+  <strong>Generado el:</strong>
+  <%= display_time_from_string @snapshot['created_at'] %>
+</p>
+
+<h2>Resultados</h2>
+<% @snapshot['batteries'].each do |battery| %>
+  <h3><%= battery['name'] %></h3>
+  <ol>
+    <% battery['exams'].each do |exam| %>
+      <li>
+        <h4><%= exam['name'] %></h4>
+        <ul>
+          <% exam['fields'].each do |field| %>
+            <li>
+              <%= field['label'] %>: <%= field['value'] %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ol>
+<% end %>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
     <title>Clinica</title>
     <%= csrf_meta_tags %>
@@ -10,6 +10,25 @@
   </head>
 
   <body>
+    <header>
+      <ul>
+        <li>
+          <%= link_to 'Baterías', batteries_path %>
+        </li>
+        <li>
+          <%= link_to 'Exámenes', exams_path %>
+        </li>
+        <li>
+          <%= link_to 'Solicitudes', appointments_path %>
+        </li>
+        <li>
+          <%= link_to 'Informes Médicos', reports_path %>
+        </li>
+        <li>
+          <%= link_to 'Agendar hora', new_appointment_path, style: 'font-weight: bold;' %>
+        </li>
+      </ul>
+    </header>
     <%= yield %>
   </body>
 </html>

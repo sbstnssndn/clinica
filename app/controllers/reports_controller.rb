@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: [:show, :edit, :update, :destroy]
+  before_action :set_report, only: [:show, :edit, :update, :destroy, :complete]
 
   # GET /reports
   # GET /reports.json
@@ -10,6 +10,7 @@ class ReportsController < ApplicationController
   # GET /reports/1
   # GET /reports/1.json
   def show
+    @snapshot = @report.snapshot
   end
 
   # GET /reports/new
@@ -83,6 +84,16 @@ class ReportsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to reports_url, notice: 'Report was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def complete
+    respond_to do |format|
+      if @report.complete
+        format.html { redirect_to @report, notice: 'Reporte completado.' }
+      else
+        format.html { redirect_to edit_report_path @report }
+      end
     end
   end
 

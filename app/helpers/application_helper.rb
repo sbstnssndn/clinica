@@ -7,4 +7,8 @@ module ApplicationHelper
     end
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
+
+  def display_time_from_string(str)
+    Time.parse(str).strftime("%d/%m/%Y a las %H:%M hrs.")
+  end
 end

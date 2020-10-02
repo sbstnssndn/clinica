@@ -15,8 +15,9 @@ class BatteriesController < ApplicationController
 
   # GET /batteries/new
   def new
-    @battery = Battery.new
+    @battery = Battery.new(order: Battery.next_order)
     @battery.exams.build
+    @battery.battery_offerings.build.build_branch
   end
 
   # GET /batteries/1/edit
@@ -90,6 +91,9 @@ class BatteriesController < ApplicationController
         ],
         exam_selections_attributes: [
           :id, :order, :exam_id, :battery_id
+        ],
+        battery_offerings_attributes: [
+          :id, :price, :branch_id, :battery_id
         ]
       )
     end

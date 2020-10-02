@@ -20,6 +20,13 @@
   <%= f.submit 'Guardar orden' %>
 <% end %>
 
+<h2>Precios</h2>
+<% @battery.battery_offerings.each do |offering| %>
+  <p>
+    <%= offering.branch.name %>: $<%= offering.price %>
+  </p>
+<% end %>
+
 
 <%= link_to 'Edit', edit_battery_path(@battery) %> |
 <%= link_to 'Back', batteries_path %>

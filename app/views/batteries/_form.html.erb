@@ -26,6 +26,21 @@
     <%= form.number_field :order %>
   </div>
 
+  <% # Listar sucursales y crear precio para cada una %>
+  <h2>Sucursales</h2>
+  <% Branch.all.each do |branch| %>
+    <%= form.fields_for :battery_offerings do |offering| %>
+      <div class="field">
+        <%= branch.name %>
+        <%= offering.label :price, 'Precio' %>
+        <%= offering.text_field :price %>
+
+        <%= offering.hidden_field :branch_id, value: branch.id
+        %>
+      </div>
+    <% end %>
+  <% end %>
+
 
   <h2>Agregar exámenes</h2>
   <div class="field">

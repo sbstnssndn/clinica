@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @battery_offering.price %>
+</p>
+
+<p>
+  <strong>Battery:</strong>
+  <%= @battery_offering.battery %>
+</p>
+
+<p>
+  <strong>Branch:</strong>
+  <%= @battery_offering.branch %>
+</p>
+
+<%= link_to 'Edit', edit_battery_offering_path(@battery_offering) %> |
+<%= link_to 'Back', battery_offerings_path %>

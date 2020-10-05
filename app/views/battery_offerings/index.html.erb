@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Battery Offerings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Price</th>
+      <th>Battery</th>
+      <th>Branch</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @battery_offerings.each do |battery_offering| %>
+      <tr>
+        <td><%= battery_offering.price %></td>
+        <td><%= battery_offering.battery %></td>
+        <td><%= battery_offering.branch %></td>
+        <td><%= link_to 'Show', battery_offering %></td>
+        <td><%= link_to 'Edit', edit_battery_offering_path(battery_offering) %></td>
+        <td><%= link_to 'Destroy', battery_offering, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Battery Offering', new_battery_offering_path %>

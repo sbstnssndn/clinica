@@ -17,7 +17,6 @@ class BatteriesController < ApplicationController
   def new
     @battery = Battery.new(order: Battery.next_order)
     @battery.exams.build
-    @battery.battery_offerings.build.build_branch
   end
 
   # GET /batteries/1/edit

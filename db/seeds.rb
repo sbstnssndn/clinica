@@ -34,6 +34,22 @@ Account.find_or_create_by(
   branch: concepcion
 )
 
+admin = Role.find_or_create_by(name: 'Administrador')
+business = Role.find_or_create_by(name: 'Empresa')
+guest = Role.find_or_create_by(name: 'Invitado')
+
+User.create!(
+  email: 'oferusat@gmail.com',
+  password: 'oferusdev',
+  role: admin
+) if User.find_by_email('oferusat@gmail.com').nil?
+
+User.create!(
+  email: 'empresa@test.com',
+  password: 'oferusdev',
+  role: business
+) if User.find_by_email('empresa@test.com').nil?
+
 
 battery1 = Battery.find_or_create_by(
   name: 'Batería CESO',

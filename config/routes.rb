@@ -11,6 +11,10 @@ Rails.application.routes.draw do
       collection do
         get :profile_partial
       end
+
+      member do
+        put :toggle_approbation
+      end
     end
   end
 

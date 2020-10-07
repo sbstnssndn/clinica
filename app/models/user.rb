@@ -10,6 +10,8 @@ class User < ApplicationRecord
   belongs_to :profile, polymorphic: true
   accepts_nested_attributes_for :profile
 
+  after_create :send_admin_mail
+
   PROFILE_TYPES = ['CesoProfile', 'BusinessProfile']
 
   # rails g model GuestBusinessProfile name last_name position phone
@@ -36,4 +38,30 @@ class User < ApplicationRecord
   # Unfortunately, if there is a user field called admin which controls
   # administrator access, now any user can make themselves an administrator
   # with a query like.
+
+
+  # Activación de cuenta por parte de un admin
+  def active_for_authentication?
+    super && approved?
+  end
+
+  def inactive_message
+    approved? ? super : :not_approved
+  end
+
+  def send_admin_mail
+    # Acá va un mail avisándole a un admin que alguien se registró
+    AdminMailer.new_user_waiting_for_approval(email).deliver
+  end
+
+  def self.send_reset_password_instructions(attributes={})
+    recoverable = find_or_initialize_with_errors(reset_password_keys, attributes, :not_found)
+    if !recoverable.approved?
+      recoverable.errors[:base] << I18n.t("devise.failure.not_approved")
+    elsif recoverable.persisted?
+      recoverable.send_reset_password_instructions
+    end
+    recoverable
+  end
+  # Fin activación de cuenta por parte de un admin
 end

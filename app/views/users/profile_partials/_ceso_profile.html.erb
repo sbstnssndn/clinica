@@ -1,4 +1,9 @@
-<%= f.fields_for :profile, CesoProfile.new do |builder| %>
+<%= f.fields_for :profile do |builder| %>
+  <div class="field">
+    <%= builder.label :branch_id %>
+    <%= builder.select :branch_id, options_from_collection_for_select(Branch.all, :id, :name, builder.object.branch_id) %>
+  </div>
+
   <div class="field">
     <%= builder.label :name %>
     <%= builder.text_field :name %>

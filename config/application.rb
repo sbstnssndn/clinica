@@ -30,6 +30,17 @@ module Clinica
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: 'smtp.gmail.com',
+      port: 587,
+      domain: 'gmail.com',
+      user_name: ENV['RAILS_EMAIL'],
+      password: ENV['RAILS_EMAIL_PASSWORD'],
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
+
     config.autoload_paths += %W(#{config.root}/app/models/field_types)
   end
 end

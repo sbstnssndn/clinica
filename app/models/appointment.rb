@@ -8,6 +8,8 @@ class Appointment < ApplicationRecord
 
   has_many :reports
 
+  belongs_to :user
+
   validates_presence_of :patients
 
   def exam_selections

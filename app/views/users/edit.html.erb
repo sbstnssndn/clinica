@@ -1,0 +1,35 @@
+<h1>Editar usuario</h1>
+
+<%= form_with(model: @user, local: true) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this patient from being saved:</h2>
+
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :role_id %>
+    <%= form.select :role_id, options_from_collection_for_select(Role.all, :id, :name) %>
+  </div>
+
+  <%= render "users/profile_partials/#{User.parse_profile_type(@user.profile_type)}", f: form %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+
+<%= link_to 'Lista de usuarios', users_path %> |
+<%= link_to 'Nuevo usuario', new_user_path %>

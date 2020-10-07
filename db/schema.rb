@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_05_161813) do
+ActiveRecord::Schema.define(version: 2020_10_07_203018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 2020_10_05_161813) do
     t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_appointments_on_user_id"
   end
 
   create_table "batteries", force: :cascade do |t|
@@ -78,6 +80,25 @@ ActiveRecord::Schema.define(version: 2020_10_05_161813) do
     t.text "health_permit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "business_profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "last_name"
+    t.bigint "branch_id"
+    t.boolean "payment_agreement"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_business_profiles_on_branch_id"
+  end
+
+  create_table "ceso_profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "last_name"
+    t.bigint "branch_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_ceso_profiles_on_branch_id"
   end
 
   create_table "exam_selections", force: :cascade do |t|
@@ -120,6 +141,19 @@ ActiveRecord::Schema.define(version: 2020_10_05_161813) do
     t.index ["form_field_id"], name: "index_form_values_on_form_field_id"
   end
 
+  create_table "guest_business_profiles", force: :cascade do |t|
+    t.string "name"
+    t.string "last_name"
+    t.string "position"
+    t.string "phone"
+    t.string "business_name"
+    t.text "business_address"
+    t.string "business_rut"
+    t.string "business_activity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "patients", force: :cascade do |t|
     t.string "name"
     t.string "rut"
@@ -140,16 +174,44 @@ ActiveRecord::Schema.define(version: 2020_10_05_161813) do
     t.index ["patient_id"], name: "index_reports_on_patient_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "role_id"
+    t.integer "profile_id"
+    t.string "profile_type"
+    t.boolean "approved", default: false, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["profile_id", "profile_type"], name: "index_users_on_profile_id_and_profile_type"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role_id"], name: "index_users_on_role_id"
+  end
+
   add_foreign_key "accounts", "branches"
   add_foreign_key "appointment_batteries", "appointments"
   add_foreign_key "appointment_batteries", "batteries"
   add_foreign_key "appointment_patients", "appointments"
   add_foreign_key "appointment_patients", "patients"
+  add_foreign_key "appointments", "users"
   add_foreign_key "battery_offerings", "batteries"
   add_foreign_key "battery_offerings", "branches"
+  add_foreign_key "business_profiles", "branches"
+  add_foreign_key "ceso_profiles", "branches"
   add_foreign_key "exam_selections", "batteries"
   add_foreign_key "exam_selections", "exams"
   add_foreign_key "form_values", "form_fields"
   add_foreign_key "reports", "appointments"
   add_foreign_key "reports", "patients"
+  add_foreign_key "users", "roles"
 end

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Usuarios</h1>
+
+<% @users.each do |user| %>
+  <h3>
+    <%= link_to user.email, user %>
+    <%= link_to '[X]', user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to "#{user.approved? ? 'Desactivar' : 'Activar'}", toggle_approbation_user_path(user), method: :put %>
+  </h3>
+
+  <ul>
+    <li>Rol: <%= user.role.name %></li>
+    <%= render "users/profile_infos/#{User.parse_profile_type(user.profile_type)}_info", user: user %>
+  </ul>
+<% end %>
+
+<br>
+
+<%= link_to 'Crear usuario', new_user_path %>

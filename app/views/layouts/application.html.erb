@@ -12,6 +12,15 @@
   <body>
     <header>
       <ul>
+        <% if user_signed_in? %>
+          <li><%= link_to "Mi perfil (#{current_user.email})", edit_user_registration_path %></li>
+          <li><%= link_to 'Salir', destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li><%= link_to 'Registrarse', new_user_registration_path %></li>
+          <li><%= link_to 'Iniciar Sesión', new_user_session_path %></li>
+        <% end %>
+      </ul>
+      <ul>
         <li>
           <%= link_to 'Baterías', batteries_path %>
         </li>
@@ -29,6 +38,10 @@
         </li>
       </ul>
     </header>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
     <%= yield %>
   </body>
 </html>

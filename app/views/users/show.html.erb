@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @user.email %></h1>
+<ul>
+  <li>Activo: <%= @user.approved ? 'Sí' : 'No' %></li>
+  <li>Rol: <%= @user.role.name %></li>
+  <%= render "users/profile_infos/#{User.parse_profile_type(@user.profile_type)}_info", user: @user %>
+</ul>
+
+<br>
+
+<%= link_to 'Lista de usuarios', users_path %>

@@ -1,4 +1,5 @@
 class BatteriesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_battery, only: [:show, :edit, :update, :destroy, :edit_order]
 
   # GET /batteries

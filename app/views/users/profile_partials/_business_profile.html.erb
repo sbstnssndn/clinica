@@ -1,0 +1,21 @@
+<%= f.fields_for :profile do |builder| %>
+  <div class="field">
+    <%= builder.label :branch_id %>
+    <%= builder.select :branch_id, options_from_collection_for_select(Branch.all, :id, :name, builder.object.branch_id) %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :name %>
+    <%= builder.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :last_name %>
+    <%= builder.text_field :last_name %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :payment_agreement %>
+    <%= builder.select :payment_agreement, [['Sí', true], ['No', false]] %>
+  </div>
+<% end %>

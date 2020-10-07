@@ -44,8 +44,7 @@
             <%= form.fields_for :form_values, exam_form_values do |f| %>
               <li>
                 <div class="field">
-                  <%= f.label :value, f.object.form_field.label %>
-                  <%= f.text_field :value %>
+                  <%= render "reports/fields/#{f.object.form_field.type.underscore.downcase}", f: f %>
                 </div>
               </li>
             <% end %>

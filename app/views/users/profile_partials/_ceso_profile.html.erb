@@ -1,0 +1,11 @@
+<%= f.fields_for :profile, CesoProfile.new do |builder| %>
+  <div class="field">
+    <%= builder.label :name %>
+    <%= builder.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :last_name %>
+    <%= builder.text_field :last_name %>
+  </div>
+<% end %>

@@ -1,0 +1,16 @@
+<%= f.fields_for :profile, BusinessProfile.new do |builder| %>
+  <div class="field">
+    <%= builder.label :name %>
+    <%= builder.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :last_name %>
+    <%= builder.text_field :last_name %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :payment_agreement %>
+    <%= builder.select :payment_agreement, [['Sí', true], ['No', false]] %>
+  </div>
+<% end %>

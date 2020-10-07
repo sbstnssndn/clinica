@@ -8,6 +8,19 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
+  <%= f.fields_for :profile do |profile| %>
+    <div class="field">
+      <%= profile.label :name %>
+      <%= profile.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= profile.label :last_name %>
+      <%= profile.text_field :last_name %>
+    </div>
+  <% end %>
+  <%= f.hidden_field :profile_type %>
+
   <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>

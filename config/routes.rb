@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, path_names: {
+    sign_up: 'register',
+    sign_in: 'login'
+  }, controllers: {
+    registrations: 'registrations'
+  }
+
+  scope '/admin' do
+    resources :users do
+      collection do
+        get :profile_partial
+      end
+    end
+  end
+
   resources :appointments
   resources :reports do
     collection do

@@ -1,0 +1,5 @@
+<% # estos deberían ser datos de la empresa, y la empresa debe tener un applicant %>
+<li>Nombre: <%= user.profile.name %></li>
+<li>Apellido: <%= user.profile.last_name %></li>
+<li>¿Tiene convenio?: <%= user.profile.payment_agreement ? 'Sí' : 'No' %></li>
+<li>Sucursal: <%= user.profile.branch.name %></li>

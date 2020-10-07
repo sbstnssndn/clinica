@@ -1,0 +1,17 @@
+<%
+  # Se extrae el form builder de un formulario para el modelo User
+  # para poder pasárselo al parcial que se renderea condicionalmente
+  form_builder = nil
+  form_for @user, url: '' do |f|
+    form_builder = f
+  end
+%>
+
+var profileFieldsSelector = $('#profile_fields');
+<% if @profile_type.nil? %>
+  profileFieldsSelector.html('');
+<% else %>
+  profileFieldsSelector.html(
+    '<%= j render("users/profile_partials/#{@profile_type}", f: form_builder) %>'
+  );
+<% end %>

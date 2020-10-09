@@ -1,0 +1,8 @@
+<% if f.object.form_field.options.any? %>
+  <% f.object.form_field.options.each do |option| %>
+    <%= f.radio_button :value, option.value %>
+    <%= f.label :value, option.label, value: option.value, style: 'display: inline;' %>
+  <% end %>
+<% else %>
+  <p>No hay opciones...</p>
+<% end %>

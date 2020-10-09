@@ -6,8 +6,17 @@
   <%= f.check_box :required %>
 
   <%= f.label :type %>
-  <%= f.select :type, %w[TextField IntegerField] %>
+  <%= f.select :type, %w[TextField IntegerField SingleChoiceField AttachmentField] %>
 
+  <%= f.label :length %>
+  <%= f.select :length, [['Largo', 'long'], ['Mediano', 'medium'], ['Corto', 'short']] %>
+
+  <%= f.fields_for :options do |options_builder| %>
+    <%= render 'option_fields', f: options_builder %>
+  <% end %>
+  <%= link_to_add_fields 'Agregar opción', f, :options %>
+
+  <br /><br />
   <%= f.hidden_field :_destroy %>
-  <%= link_to 'remove', '#', class: 'remove_fields' %>
+  <%= link_to 'Eliminar campo', '#', class: 'remove_fields' %>
 </fieldset>

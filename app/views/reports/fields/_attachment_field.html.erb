@@ -1,0 +1,14 @@
+
+<%= f.fields_for :documents, Document.new do |document| %>
+  <%= document.label :document, f.object.form_field.label %>
+  <%= document.file_field :document, multiple: true %>
+<% end %>
+<br />
+<% if f.object.documents.any? %>
+  <% f.object.documents.each do |document| %>
+    <div id="<%= document.id %>">
+      <%= link_to document.document_file_name, document.document.url(:original) %> <%= link_to '[X]', root_path %>
+    </div>
+  <% end %>
+<% end %>
+

@@ -3,6 +3,15 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).on 'click', 'form .remove_fields', (event) ->
   $(this).prev('input[type=hidden]').val('1')
+  console.log('cambié el valor a ' + $(this).prev('input[type=hidden]').val());
+  $(this).closest('fieldset').hide()
+  event.preventDefault()
+
+$(document).on 'click', 'form .remove_fields2', (event) ->
+  $(this).prev('input[type=hidden]').val('1')
+  console.log('cambié el valor2 a ');
+  console.log($(this));
+  console.log($(this).prev('input[type=hidden]'));
   $(this).closest('fieldset').hide()
   event.preventDefault()
 

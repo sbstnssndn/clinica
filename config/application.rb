@@ -41,6 +41,11 @@ module Clinica
       enable_starttls_auto: true
     }
 
+    # rack-cors enables cross-origin resource sharing (CORS). Simply put,
+    # rack-cors will enable browser-based applications (AngularJS, React)
+    # and mobile applications to request information from the API.
+
+
     config.autoload_paths += %W(#{config.root}/app/models/field_types)
   end
 end

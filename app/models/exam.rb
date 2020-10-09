@@ -1,7 +1,7 @@
 class Exam < ApplicationRecord
   include Formable
 
-  has_many :exam_selections
+  has_many :exam_selections, dependent: :destroy
   has_many :batteries, through: :exam_selections
   validates_uniqueness_of :name
 

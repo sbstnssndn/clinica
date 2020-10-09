@@ -62,8 +62,7 @@ class Report < ApplicationRecord
         selection.exam.form_fields.each do |field|
           form_values.create!(
             form_field: field,
-            value: nil,
-            data: { battery: battery.name, exam: selection.exam.name }
+            value: nil
           )
         end
       end

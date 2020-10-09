@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_07_203018) do
+ActiveRecord::Schema.define(version: 2020_10_08_195444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,18 @@ ActiveRecord::Schema.define(version: 2020_10_07_203018) do
     t.index ["branch_id"], name: "index_ceso_profiles_on_branch_id"
   end
 
+  create_table "documents", force: :cascade do |t|
+    t.text "description"
+    t.bigint "form_value_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "document_file_name"
+    t.string "document_content_type"
+    t.integer "document_file_size"
+    t.datetime "document_updated_at"
+    t.index ["form_value_id"], name: "index_documents_on_form_value_id"
+  end
+
   create_table "exam_selections", force: :cascade do |t|
     t.integer "order", default: 1
     t.bigint "exam_id"
@@ -129,6 +141,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_203018) do
     t.string "formable_type"
     t.integer "min"
     t.integer "max"
+    t.integer "length"
   end
 
   create_table "form_values", force: :cascade do |t|
@@ -152,6 +165,15 @@ ActiveRecord::Schema.define(version: 2020_10_07_203018) do
     t.string "business_activity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "options", force: :cascade do |t|
+    t.string "label"
+    t.string "value"
+    t.bigint "form_field_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_field_id"], name: "index_options_on_form_field_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -208,9 +230,11 @@ ActiveRecord::Schema.define(version: 2020_10_07_203018) do
   add_foreign_key "battery_offerings", "branches"
   add_foreign_key "business_profiles", "branches"
   add_foreign_key "ceso_profiles", "branches"
+  add_foreign_key "documents", "form_values"
   add_foreign_key "exam_selections", "batteries"
   add_foreign_key "exam_selections", "exams"
   add_foreign_key "form_values", "form_fields"
+  add_foreign_key "options", "form_fields"
   add_foreign_key "reports", "appointments"
   add_foreign_key "reports", "patients"
   add_foreign_key "users", "roles"

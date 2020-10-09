@@ -4,6 +4,19 @@ class FormValue < ApplicationRecord
 
   validate :value_is_valid, on: :update
 
+  has_many :documents
+  accepts_nested_attributes_for :documents
+
+  def documents_attributes=(array = [])
+    array.each do |_, documents_attributes_array|
+      documents_attributes_array.each do |_, documents_array|
+        documents_array.each do |document|
+          documents.create document: document
+        end
+      end
+    end
+  end
+
   private
 
   def value_is_valid

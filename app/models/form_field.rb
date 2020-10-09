@@ -1,6 +1,11 @@
 class FormField < ApplicationRecord
   belongs_to :formable, polymorphic: true
 
+  has_many :options, dependent: :destroy
+  accepts_nested_attributes_for :options, allow_destroy: true
+
+  enum length: { long: 0, medium: 1, short: 2 }
+
   validates :type, presence: true
   validates :label, presence: true
 

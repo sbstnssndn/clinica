@@ -119,6 +119,7 @@ class ReportsController < ApplicationController
           :value,
           documents_attributes: [
             :id,
+            :description,
             document: []
           ]
         ],

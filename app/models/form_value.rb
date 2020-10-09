@@ -9,10 +9,11 @@ class FormValue < ApplicationRecord
 
   def documents_attributes=(array = [])
     array.each do |_, documents_attributes_array|
-      documents_attributes_array.each do |_, documents_array|
-        documents_array.each do |document|
-          documents.create document: document
-        end
+      documents_attributes_array[:document].each do |document|
+        documents.create(
+          document: document,
+          description: documents_attributes_array[:description]
+        )
       end
     end
   end

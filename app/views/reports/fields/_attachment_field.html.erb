@@ -1,5 +1,5 @@
-
 <%= f.fields_for :documents, Document.new do |document| %>
+  <%= document.hidden_field :description, value: 'exams' %>
   <%= document.label :document, f.object.form_field.label %>
   <%= document.file_field :document, multiple: true %>
 <% end %>
@@ -7,8 +7,9 @@
 <% if f.object.documents.any? %>
   <% f.object.documents.each do |document| %>
     <div id="<%= document.id %>">
-      <%= link_to document.document_file_name, document.document.url(:original) %> <%= link_to '[X]', root_path %>
+      <%= link_to document.document_file_name, document.document.url(:original) %> <%= link_to '[X]', document_path(document), remote: true, method: :delete, data: { confirm: 'seguro?' } %>
     </div>
   <% end %>
 <% end %>
+
 
